@@ -6,6 +6,9 @@ attribute :disks, :kind_of => Array
 attribute :info, :kind_of => Mixlib::ShellOut, :default => nil
 attribute :state, :kind_of => String, :default => nil
 
+attribute :force, :kind_of => [TrueClass, FalseClass], :default => false
+attribute :recursive, :kind_of => [TrueClass, FalseClass], :default => false
+
 def initialize(*args)
   super
   @action = :create

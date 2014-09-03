@@ -13,7 +13,7 @@ end
 action :create do
   unless created?
     Chef::Log.info("Creating zpool #{@zpool.name}")
-    system("zpool create #{@zpool.name} #{@zpool.disks.join(' ')}")
+    system("zpool create #{new_resource.force ? '-f' : nil} #{@zpool.name} #{@zpool.disks.join(' ')}")
     new_resource.updated_by_last_action(true)
   else
     unless online?
@@ -25,7 +25,7 @@ end
 action :destroy do
   if created?
     Chef::Log.info("Destroying zpool #{@zpool.name}")
-    system("zpool destroy -f  #{@zpool.name}")
+    system("zpool destroy #{new_resource.force ? '-f' : nil} #{new_resource.recursive ? '-r' : nil} #{@zpool.name}")
     new_resource.updated_by_last_action(true)
   end
 end
